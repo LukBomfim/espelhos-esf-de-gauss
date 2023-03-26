@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espelhos esféricos de Gauss</title>
+    <style>
+        body{
+            font: normal 20pt Arial;
+            text-align: center;
+            background-color: rgb(220, 255, 255);
+        }
+        h1{
+            font: normal 25pt Arial;
+            background-color: black;
+            color: white;
+        }
+        p#formula{
+            font: normal 30pt Comic Sans MS;
+            background-color: black;
+            color: yellow;
+            width: 300px;
+            margin-inline: auto;
+        }
+        input{
+            font: normal 20pt Arial;
+            width: 70px;
+        }
+        input#calc{
+            width: 120px;
+        }
+        div{
+            display: inline-block;
+            line-height: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Espelhos esféricos de Gauss
+    </h1>
+
+    <p id="formula">
+        Fórmula:<br><br>
+        1/f = 1/P + 1/P'
+    </p>
+
+    <br>
+    Qual você quer descobrir?
+    <br>
+
+    <input type="button" id="F" value="f" onclick="clicar_f()"> 
+    <input type="button" id="P" value="P" onclick="clicar_p()"> 
+    <input type="button" id="PL" value="P'" onclick="clicar_pl()"> 
+    <br>
+
+    <p>
+        <div id="digite"></div><p></p>
+        <div id="a"></div>
+        <div id="b"></div> <br><br>
+        <div id="calcular"></div>
+    </p>
+
+    <script>
+        var a = document.getElementById('a')
+        var b = document.getElementById('b')
+        var desconhecido = ''
+        var digite = document.getElementById('digite')
+        var calcular = document.getElementById('calcular')
+
+        function clicar_f(){
+            desconhecido = 'F'
+            digite.innerHTML = 'Digite o valor de:'
+            a.innerHTML = `P:` + `<input type="number" name="n1" id="n1">`
+            b.innerHTML = `P':` + `<input type="number" name="n2" id="n2">`
+            calcular.innerHTML = `<input type="button" id="calc" value="Calcular" onclick="calc()">`
+        }
+        function clicar_p(){
+            desconhecido = 'P'
+            digite.innerHTML = 'Digite o valor de:'
+            a.innerHTML = `F:` + `<input type="number" name="n1" id="n1">`
+            b.innerHTML = "P':" + `<input type="number" name="n2" id="n2">`
+            calcular.innerHTML = `<input type="button" id="calc" value="Calcular" onclick="calc()">`
+
+        }
+        function clicar_pl(){
+            desconhecido = "PL"
+            digite.innerHTML = 'Digite o valor de:'
+            a.innerHTML = `F:` + `<input type="number" name="n1" id="n1">`
+            b.innerHTML = `P:` + `<input type="number" name ="n2" id="n2">`
+            calcular.innerHTML = `<input type="button" id="calc" value="Calcular" onclick="calc()">`
+        }
+        function calc(){
+            var txtn1 = document.getElementById('n1')
+            var txtn2 = document.getElementById('n2')
+            var n1 = Number(txtn1.value)
+            var n2 = Number(txtn2.value)
+            var d = 2
+            var calculo1 = `${n1}, ${n2} |`
+
+            function calcularMMC(num1, num2) {
+                    var resto, x, y;
+                    x = num1;
+                    y = num2;
+                    while(resto!=0){
+                        resto = x % y;
+                        x = y;
+                        y = resto;
+                    }
+                    return (num1*num2)/x;
+                    }
+            var mmc = calcularMMC(n1, n2)
+            // FÓRMULAS
+            if (desconhecido == 'F'){
+                var formula = `<u id="amarelo">1<em>/</em>f = 1<em>/</em>P + 1<em>/</em>P'</u><br>
+                                1<em>/</em>f = 1<em>/</em>${n1} + 1<em>/</em>${n2}<br>
+                                1<em>/</em>f = (${mmc}÷${n1} + ${mmc}÷${n2})<em>/</em>${mmc}<br>
+                                1<em>/</em>f = ${mmc/n1} + ${mmc/n2}<em>/</em>${mmc}<br>
+                                1<em>/</em>f = ${mmc/n1 + mmc/n2}<em>/</em>${mmc}<br>
+                                ${mmc/n1 + mmc/n2}f = ${mmc} <br>
+                                f = ${mmc}<em>/</em>${mmc/n1 + mmc/n2} <br>
+                                <u id="azul">f = ${mmc / (mmc/n1 + mmc/n2)}</u>`
+            } else if (desconhecido == 'P'){
+                var formula = `<u id="amarelo">1<em>/</em>f = 1<em>/</em>P + 1<em>/</em>P'</u><br>
+                                1<em>/</em>${n1} = 1<em>/</em>P + 1<em>/</em>${n2}<br>
+                                1<em>/</em>P = 1<em>/</em>${n1} - 1<em>/</em>${n2}<br>
+                                1<em>/</em>P = (${mmc}÷${n1} - ${mmc}÷${n2})<em>/</em>${mmc}<br>
+                                1<em>/</em>P = ${mmc/n1} - ${mmc/n2}<em>/</em>${mmc}<br>
+                                1<em>/</em>f = ${mmc/n1 - mmc/n2}<em>/</em>${mmc}<br>
+                                <u id="azul">f = ${mmc / (mmc/n1 - mmc/n2)}</u>`
+            } else {
+                var formula = `<u id="amarelo">1<em>/</em>f = 1<em>/</em>P + 1<em>/</em>P'</u><br>
+                                1<em>/</em>${n1} = 1<em>/</em>${n2} + 1<em>/</em>P'<br>
+                                1<em>/</em>P' = 1<em>/</em>${n1} - 1<em>/</em>${n2}<br>
+                                1<em>/</em>P' = (${mmc}÷${n1} - ${mmc}÷${n2})<em>/</em>${mmc}<br>
+                                1<em>/</em>P' = ${mmc/n1} - ${mmc/n2}<em>/</em>${mmc}<br>
+                                1<em>/</em>f = ${mmc/n1 - mmc/n2}<em>/</em>${mmc}<br>
+                                <u>f = ${mmc / (mmc/n1 - mmc/n2)}</u>`
+            }
+
+            if (n1 != n2){
+                while (n1 != 1 || n2 != 1){
+                    while (n1%d != 0 && n2%d != 0){
+                        d += 1
+                    }
+                    calculo1 += `${d}<br>`
+                    if (n1%d == 0){
+                        n1 /= d
+                    }
+                    if (n2%d == 0){
+                        n2 /= d
+                    }
+                calculo1 += `${n1}, ${n2} |`
+                }
+                var calc_mmc = `<div>MMC:</div> ${calculo1}= <u>${mmc}</u>`
+            } else{
+                var calc_mmc = ''
+            }
+
+            // CÁLCULOS E RESPOSTAS
+            document.write(`
+            <title> Cálculos e resultado</title>
+            <style> 
+                body{
+                    background-color: rgb(220, 255, 255);
+                    font: normal 13pt Arial;
+                }
+                h1{
+                    background-color: black;
+                    color: white;
+                    text-align: center;
+                    font: normal 25pt Arial;
+                }
+                u#amarelo{
+                    background-color: black;
+                    color: yellow;
+                }
+                u{
+                    color: blue;
+                }
+                div{
+                    background-color: black;
+                    color: white;
+                    width: 100px;
+                }
+            </style>
+
+            <h1>Cálculos e Resultado</h1>
+
+            <h2>${formula}</h2>
+            <h2>${calc_mmc}</h2>`)
+        }
+    </script>
+</body>
+</html>
