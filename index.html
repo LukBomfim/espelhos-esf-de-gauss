@@ -15,24 +15,49 @@
             font: normal 25pt Arial;
             background-color: black;
             color: white;
+            width: 470px;
+            margin-inline: auto;
+            border-radius: 10px;
+            text-align: center;
+
         }
         p#formula{
-            font: normal 30pt Comic Sans MS;
             background-color: black;
             color: yellow;
-            width: 300px;
+            width: 200px;
             margin-inline: auto;
+            border-radius: 20px;
         }
         input{
             font: normal 20pt Arial;
             width: 70px;
+            border-radius: 0px;
+        }
+        input:hover{
+            background-color: rgb(218, 218, 218);
+        }
+        input:active{
+            background-color: rgb(114, 114, 114);
         }
         input#calc{
             width: 120px;
         }
         div{
+            text-align: start;
             display: inline-block;
             line-height: 5px;
+            line-height: 50px;
+        }
+        u{
+            color: blue;
+        }
+        a{
+            color: black;
+            font-style: italic;
+        }
+        a:hover{
+            color: blue;
+            transition: 300ms;
         }
     </style>
 </head>
@@ -40,27 +65,25 @@
     <h1>
         Espelhos esféricos de Gauss
     </h1>
-
     <p id="formula">
         Fórmula:<br><br>
         1/f = 1/P + 1/P'
     </p>
-
     <br>
-    Qual você quer descobrir?
-    <br>
-
+    Qual você quer descobrir?<br>
     <input type="button" id="F" value="f" onclick="clicar_f()"> 
     <input type="button" id="P" value="P" onclick="clicar_p()"> 
     <input type="button" id="PL" value="P'" onclick="clicar_pl()"> 
     <br>
-
     <p>
         <div id="digite"></div><p></p>
         <div id="a"></div>
         <div id="b"></div> <br><br>
         <div id="calcular"></div>
     </p>
+    <div id="msg"></div>
+
+    <a href="https://www.instagram.com/luk.bf" target="_blank">&copy;luk.bf</a>
 
     <script>
         var a = document.getElementById('a')
@@ -98,6 +121,7 @@
             var n2 = Number(txtn2.value)
             var d = 2
             var calculo1 = `${n1}, ${n2} |`
+            var msg = document.getElementById('msg')
 
             function calcularMMC(num1, num2) {
                     var resto, x, y;
@@ -153,43 +177,19 @@
                     }
                 calculo1 += `${n1}, ${n2} |`
                 }
-                var calc_mmc = `<div>MMC:</div> ${calculo1}= <u>${mmc}</u>`
+                var calc_mmc = `<div>MMC:</div> </br> ${calculo1}= <u>${mmc}</u>`
             } else{
                 var calc_mmc = ''
             }
 
             // CÁLCULOS E RESPOSTAS
-            document.write(`
-            <title> Cálculos e resultado</title>
-            <style> 
-                body{
-                    background-color: rgb(220, 255, 255);
-                    font: normal 13pt Arial;
-                }
-                h1{
-                    background-color: black;
-                    color: white;
-                    text-align: center;
-                    font: normal 25pt Arial;
-                }
-                u#amarelo{
-                    background-color: black;
-                    color: yellow;
-                }
-                u{
-                    color: blue;
-                }
-                div{
-                    background-color: black;
-                    color: white;
-                    width: 100px;
-                }
-            </style>
+            msg.innerHTML = `
+            
 
-            <h1>Cálculos e Resultado</h1>
+            <h1 id="t2">Cálculos e Resultado</h1>
 
             <h2>${formula}</h2>
-            <h2>${calc_mmc}</h2>`)
+            <h2>${calc_mmc}</h2>`
         }
     </script>
 </body>
